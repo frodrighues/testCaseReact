@@ -1,0 +1,9 @@
+.vscode/tasks.json
+.vscode/launch.json
+bin/
+obj/
+temp/
+UserData/
+TestData/
+node_modules/
+public/build
