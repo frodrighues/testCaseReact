@@ -5,8 +5,10 @@
   "main": "index.ts",
   "dependencies": {
     "@types/react": "^16.4.13",
+    "@types/react-bootstrap": "^0.32.13",
     "@types/react-dom": "^16.0.7",
     "react": "^16.4.2",
+    "react-bootstrap": "^0.32.3",
     "react-dom": "^16.4.2",
     "ts-loader": "^4.5.0",
     "tslint": "^5.11.0",
