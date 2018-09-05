@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-//using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using testCaseReact.Data;
 
@@ -11,13 +11,13 @@ namespace testCaseReact.Controllers
     [Produces("application/json")]
     public class UsersController : ControllerBase
     {
-        //private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
         private readonly ApplicationDbContext _dbContext;
 
-        public UsersController(ApplicationDbContext dbContext)
+        public UsersController(ApplicationDbContext dbContext, IMapper mapper)
         {
             this._dbContext = dbContext;
-            //this._mapper = mapper;
+            this._mapper = mapper;
         }
 
         [HttpGet]
@@ -34,11 +34,12 @@ namespace testCaseReact.Controllers
 
             try
             {
+                
+                var entity = _mapper.Map<testCaseReact.DTO.BistroUser, BistroUser>(item);
                 return Ok(item);
-               //var entity = AutoMapper.Mapper.
                //_dbContext.BistroUser.Add(item);
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
                 return BadRequest();
             }

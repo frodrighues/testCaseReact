@@ -34,39 +34,35 @@ namespace testCaseReact.Data
             {
                 entity.ToTable("Bistro_Permission");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Description).IsRequired();
             });
 
             modelBuilder.Entity<BistroRole>(entity =>
             {
                 entity.ToTable("Bistro_Role");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Description).IsRequired();
             });
 
             modelBuilder.Entity<BistroUser>(entity =>
             {
                 entity.ToTable("Bistro_User");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Description).HasColumnType("varchar");
-
                 entity.Property(e => e.Name).IsRequired();
 
                 entity.Property(e => e.Surname).IsRequired();
 
-                entity.HasOne(d => d.PermissionRole)
+                entity.HasOne(d => d.Permission)
                     .WithMany(p => p.BistroUser)
-                    .HasForeignKey(d => d.PermissionRoleId)
+                    .HasForeignKey(d => d.PermissionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_USER_PERMISSIONROLEID_PERMISSION_ID");
+                    .HasConstraintName("Bistro_User_PermissionId_fkey");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.BistroUser)
                     .HasForeignKey(d => d.RoleId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_USER_ROLEID_ROLE_ID");
+                    .HasConstraintName("Bistro_User_RoleId_fkey");
             });
         }
     }
