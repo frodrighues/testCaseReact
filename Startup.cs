@@ -6,10 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using testCaseReact.Data;
+using AutoMapper;
+
 
 namespace testCaseReact
 {
@@ -26,14 +30,18 @@ namespace testCaseReact
         public void ConfigureServices(IServiceCollection services)
         {
             services//.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            .AddEntityFrameworkNpgsql().AddDbContext<ApplicationDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultDatabaseConnection")));
+
+            services
             .AddMvcCore(options =>
             {
                 options.RequireHttpsPermanent = true;
                 options.RespectBrowserAcceptHeader = true;
-
             })
             .AddFormatterMappings()
             .AddJsonFormatters();
+
+            //services.AddAutoMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
