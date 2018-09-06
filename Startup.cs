@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using testCaseReact.Data;
 using AutoMapper;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace testCaseReact
 {
@@ -31,6 +31,13 @@ namespace testCaseReact
         {
             services//.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
             .AddEntityFrameworkNpgsql().AddDbContext<ApplicationDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("DefaultDatabaseConnection")));
+
+            //Setting authorization token
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt => {
+                    opt.Authority = "{yourAuthorizationServerAddress}";
+                    opt.Audience="{yourAudience}";
+                });
 
             services
             .AddMvcCore(options =>
@@ -57,6 +64,7 @@ namespace testCaseReact
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

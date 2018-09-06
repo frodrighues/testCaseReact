@@ -15,6 +15,7 @@ namespace testCaseReact.Data
         {
         }
 
+        public virtual DbSet<BistroCredentials> BistroCredentials { get; set; }
         public virtual DbSet<BistroPermission> BistroPermission { get; set; }
         public virtual DbSet<BistroRole> BistroRole { get; set; }
         public virtual DbSet<BistroUser> BistroUser { get; set; }
@@ -30,6 +31,17 @@ namespace testCaseReact.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BistroCredentials>(entity =>
+            {
+                entity.ToTable("Bistro_Credentials");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.BistroCredentials)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Bistro_Credentials_UserId_fkey");
+            });
+
             modelBuilder.Entity<BistroPermission>(entity =>
             {
                 entity.ToTable("Bistro_Permission");

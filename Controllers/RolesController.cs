@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using testCaseReact.Data;
 
@@ -18,6 +19,7 @@ namespace testCaseReact.Controllers
         }
 
         [HttpGet]
+       
         public ActionResult<IList<BistroRole>> Get()
         {
             return Ok(_dbContext.BistroRole.ToList());
